@@ -3,15 +3,6 @@ vim9script
 command -nargs=+ -complete=customlist,ProjectCompleteFn Project g:ProjectFn("<args>")
 
 g:project_languages = {
-	# 'c': {
-	# 	'init': function('CInit')
-	# },
-	# 'cpp': {
-	# 	'init': function('CPPInit')
-	# },
-	# 'rust': {
-	# 	'init': function('RustInit')
-	# }
 }
 
 def GetCompletions(args: list<string>): list<string>
@@ -67,7 +58,6 @@ def CInit(args: list<string>)
 		return
 	endif
 	# TODO: If current directory already looks like a project, ask for
-	# TODO: Add makefile with build, run and clean
 	# confirmation
 	
 	# create src, target, include, and lib directories
@@ -90,18 +80,16 @@ def CInit(args: list<string>)
 
 	# create src/main and fill it with a hello world program
 	writefile(
-		[
-			'#include <stdio.h>',
-			'#include <stdlib.h>',
-			'',
-			'int main () {',
-			'	printf("Hello World");',
-			'	return 0;',
-			'}',
-			''
-		],
+		readfile(expand('<script>:h') .. '/snippets/c/main.c'),
 		'./src/main.c'
 	)
+
+	# create makefile in root directory and fill it with basic sample make
+	writefile(
+		readfile(expand('<script>:h') .. '/snippets/c/makefile'),
+		'./makefile'
+	)
+
 enddef
 
 if !g:project_languages->has_key('c') 
@@ -109,3 +97,5 @@ if !g:project_languages->has_key('c')
 		"init": CInit,
 	}
 endif
+
+# echom readfile(expand('<script>:h') .. '/snippets/c/main.c')
