@@ -1,24 +1,37 @@
 SHELL = powershell.exe
 CC := gcc
 CFLAGS := -Wall -Werror
-OPTLEVEL := -O0
+ifndef OPTLEVEL
+	OPTLEVEL := -O0
+endif
 
 MAIN := main
 BINARY := App.exe
 
 TARGETDIR := .\target
 SRCDIR := .\src
-INCLUDES := .\include
-LIBRARIES := .\lib
+SOURCES := main.c 
 
-$(TARGETDIR)/$(BINARY): $(TARGETDIR)/$(MAIN).o
-	$(CC) $(CFLAGS) $(TARGETDIR)/$(MAIN).o -o $(TARGETDIR)/$(BINARY) $(OPTLEVEL)
+OBJECTS := $(subst .c,.o,$(SOURCES))
 
-$(TARGETDIR)/$(MAIN).o: $(SRCDIR)/$(MAIN).c | $(TARGETDIR)
-	$(CC) $(CFLAGS) $(SRCDIR)/$(MAIN).c -c -o $(TARGETDIR)/$(MAIN).o $(OPTLEVEL)
+# TODO : Add include and library support in below commands
+INCLUDEDIR := .\include
+INCLUDES := 
+LIBDIR := .\lib
+LIBS := 
+
+# Compiles Binary from object files
+$(TARGETDIR)/$(BINARY): $(addprefix $(TARGETDIR)\, $(OBJECTS))
+	$(CC) $(CFLAGS) $(addprefix $(TARGETDIR)\, $(OBJECTS)) -o $(TARGETDIR)/$(BINARY) $(OPTLEVEL)
+
+# Compiles object files from source
+$(TARGETDIR)\\%.o: $(SRCDIR)\\%.c
+	$(CC) $(CFLAGS) $(SRCDIR)/$*.c -c -o $(TARGETDIR)/$*.o $(OPTLEVEL) 
+
+build: $(TARGETDIR)/$(BINARY)
 
 run: $(TARGETDIR)/$(BINARY)
-	./$(TARGETDIR)/$(MAIN).exe
+	./$(TARGETDIR)/$(BINARY)
 
 clean: 
 	&del -Force .\$(TARGETDIR)\*
