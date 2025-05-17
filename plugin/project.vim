@@ -52,50 +52,48 @@ def g:ProjectFn(args: string)
 	Command(command_args)
 enddef
 
-def CInit(args: list<string>)
-	if !has("win32") 
-		echoerr "This script has not been tested on non windows OS's: Aborting"
-		return
-	endif
-	# TODO: If current directory already looks like a project, ask for
-	# confirmation
-	
-	# create src, target, include, and lib directories
-	mkdir("./src", "p")
-	mkdir("./include", "p")
-	mkdir("./target", "p")
-	mkdir("./lib", "p")
-
-	# if git is present initialize git repo
-	if executable('git')
-		execute "silent !git init"
-		# add gitignore file
-		writefile(
-			[
-				'./target/*',
-			],
-			"./gitignore"
-		)
-	endif
-
-	# create src/main and fill it with a hello world program
-	writefile(
-		readfile(expand('<script>:h') .. '/snippets/c/main.c'),
-		'./src/main.c'
-	)
-
-	# create makefile in root directory and fill it with basic sample make
-	writefile(
-		readfile(expand('<script>:h') .. '/snippets/c/makefile'),
-		'./makefile'
-	)
-
-enddef
-
+# C related
 if !g:project_languages->has_key('c') 
+	def CInit(args: list<string>)
+		if !has("win32") 
+			echoerr "This script has not been tested on non windows OS's: Aborting"
+			return
+		endif
+		# TODO: If current directory already looks like a project, ask for
+		# confirmation
+		
+		# create src, target, include, and lib directories
+		mkdir("./src", "p")
+		mkdir("./include", "p")
+		mkdir("./target", "p")
+		mkdir("./lib", "p")
+
+		# if git is present initialize git repo
+		if executable('git')
+			execute "silent !git init"
+			# add gitignore file
+			writefile(
+				[
+					'./target/*',
+				],
+				"./gitignore"
+			)
+		endif
+
+		# create src/main and fill it with a hello world program
+		writefile(
+			readfile(expand('<script>:h') .. '/snippets/c/main.c'),
+			'./src/main.c'
+		)
+
+		# create makefile in root directory and fill it with basic sample make
+		writefile(
+			readfile(expand('<script>:h') .. '/snippets/c/makefile'),
+			'./makefile'
+		)
+	enddef
+
 	g:project_languages['c'] = {
 		"init": CInit,
 	}
 endif
-
-# echom readfile(expand('<script>:h') .. '/snippets/c/main.c')
