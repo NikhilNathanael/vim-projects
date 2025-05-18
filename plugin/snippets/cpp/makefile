@@ -1,5 +1,5 @@
 SHELL = powershell.exe
-CC := gcc
+CC := g++
 CFLAGS := -Wall -Werror
 ifndef OPTLEVEL
 	OPTLEVEL := -O0
@@ -10,9 +10,9 @@ BINARY := App.exe
 
 TARGETDIR := .\target
 SRCDIR := .\src
-SOURCES := main.c 
+SOURCES := main.cpp
 
-OBJECTS := $(subst .c,.o,$(SOURCES))
+OBJECTS := $(subst .cpp,.o,$(SOURCES))
 
 # TODO : Add include and library support in below commands
 INCLUDEDIR := .\include
@@ -25,8 +25,8 @@ $(TARGETDIR)/$(BINARY): $(addprefix $(TARGETDIR)\, $(OBJECTS))
 	$(CC) $(CFLAGS) $(addprefix $(TARGETDIR)\, $(OBJECTS)) -o $(TARGETDIR)/$(BINARY) $(OPTLEVEL)
 
 # Compiles object files from source
-$(TARGETDIR)\\%.o: $(SRCDIR)\\%.c
-	$(CC) $(CFLAGS) $(SRCDIR)/$*.c -c -o $(TARGETDIR)/$*.o $(OPTLEVEL) 
+$(TARGETDIR)\\%.o: $(SRCDIR)\\%.cpp
+	$(CC) $(CFLAGS) $(SRCDIR)/$*.cpp -c -o $(TARGETDIR)/$*.o $(OPTLEVEL) 
 
 build: $(TARGETDIR)/$(BINARY)
 

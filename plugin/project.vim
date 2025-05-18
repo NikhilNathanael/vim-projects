@@ -82,15 +82,13 @@ if !g:project_languages->has_key('c')
 
 		# create src/main and fill it with a hello world program
 		writefile(
-			readfile(expand('<script>:h') .. '/snippets/cpp/main.cpp'),
+			readfile(expand('<script>:h') .. '/snippets/c/main.c'),
 			'./src/main.c'
 		)
 
 		# create makefile in root directory and fill it with basic sample make
-		var makefile = readfile(expand('<script>:h') .. '/snippets/c/makefile')
-		makefile->insert("CC := gcc", 1)
 		writefile(
-			makefile,
+			readfile(expand('<script>:h') .. '/snippets/c/makefile'),
 			'./makefile'
 		)
 	enddef
@@ -132,15 +130,14 @@ if !g:project_languages->has_key('cpp')
 
 		# create src/main and fill it with a hello world program
 		writefile(
-			readfile(expand('<script>:h') .. '/snippets/c/main.c'),
-			'./src/main.c'
+			readfile(expand('<script>:h') .. '/snippets/cpp/main.cpp'),
+			'./src/main.cpp'
 		)
 
 		# create makefile in root directory and fill it with basic sample make
-		var makefile = readfile(expand('<script>:h') .. '/snippets/c/makefile')
-		makefile->insert("CC := g++", 1)
+		
 		writefile(
-			makefile,
+			readfile(expand('<script>:h') .. '/snippets/cpp/makefile'),
 			'./makefile'
 		)
 	enddef
