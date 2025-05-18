@@ -1,5 +1,4 @@
 SHELL = powershell.exe
-CC := gcc
 CFLAGS := -Wall -Werror
 ifndef OPTLEVEL
 	OPTLEVEL := -O0

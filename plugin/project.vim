@@ -82,13 +82,15 @@ if !g:project_languages->has_key('c')
 
 		# create src/main and fill it with a hello world program
 		writefile(
-			readfile(expand('<script>:h') .. '/snippets/c/main.c'),
+			readfile(expand('<script>:h') .. '/snippets/cpp/main.cpp'),
 			'./src/main.c'
 		)
 
 		# create makefile in root directory and fill it with basic sample make
+		var makefile = readfile(expand('<script>:h') .. '/snippets/c/makefile')
+		makefile->insert("CC := gcc", 1)
 		writefile(
-			readfile(expand('<script>:h') .. '/snippets/c/makefile'),
+			makefile,
 			'./makefile'
 		)
 	enddef
@@ -97,3 +99,64 @@ if !g:project_languages->has_key('c')
 		"init": CInit,
 	}
 endif
+
+# TODO: CPP Projects
+# Should be like C but with different filename and compiler as the only
+# difference
+if !g:project_languages->has_key('cpp') 
+	def CPPInit(args: list<string>)
+		if !has("win32") 
+			echoerr "This script has not been tested on non windows OS's: Aborting"
+			return
+		endif
+		# TODO: If current directory already looks like a project, ask for
+		# confirmation
+		
+		# create src, target, include, and lib directories
+		mkdir("./src", "p")
+		mkdir("./include", "p")
+		mkdir("./target", "p")
+		mkdir("./lib", "p")
+
+		# if git is present initialize git repo
+		if executable('git')
+			execute "silent !git init"
+			# add gitignore file
+			writefile(
+				[
+					'./target/*',
+				],
+				"./gitignore"
+			)
+		endif
+
+		# create src/main and fill it with a hello world program
+		writefile(
+			readfile(expand('<script>:h') .. '/snippets/c/main.c'),
+			'./src/main.c'
+		)
+
+		# create makefile in root directory and fill it with basic sample make
+		var makefile = readfile(expand('<script>:h') .. '/snippets/c/makefile')
+		makefile->insert("CC := g++", 1)
+		writefile(
+			makefile,
+			'./makefile'
+		)
+	enddef
+
+	g:project_languages['cpp'] = {
+		"init": CPPInit,
+	}
+endif
+
+# Rust related
+if !g:project_languages->has_key('rust') 
+	def RustInit(args: list<string>)
+		system("cargo init")
+	enddef
+
+	g:project_languages['rust'] = {
+		"init": RustInit,
+	}
+endif 
