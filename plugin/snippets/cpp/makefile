@@ -8,16 +8,16 @@ endif
 MAIN := main
 BINARY := App.exe
 
-TARGETDIR := .\target
-SRCDIR := .\src
+TARGETDIR := ./target
+SRCDIR := ./src
 SOURCES := main.cpp
 
 OBJECTS := $(subst .cpp,.o,$(SOURCES))
 
 # TODO : Add include and library support in below commands
-INCLUDEDIR := .\include
+INCLUDEDIR := ./include
 INCLUDES := 
-LIBDIR := .\lib
+LIBDIR := ./lib
 LIBS := 
 
 # Compiles Binary from object files
