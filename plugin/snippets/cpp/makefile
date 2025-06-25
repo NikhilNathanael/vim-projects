@@ -28,6 +28,10 @@ $(TARGETDIR)/$(BINARY): $(addprefix $(TARGETDIR)\, $(OBJECTS))
 $(TARGETDIR)\\%.o: $(SRCDIR)\\%.cpp
 	$(CC) $(CFLAGS) $(SRCDIR)/$*.cpp -c -o $(TARGETDIR)/$*.o $(OPTLEVEL) 
 
+# Only checks for syntax correctness
+check:
+	$(CC) $(CFLAGS) $(addprefix $(SRCDIR)\, $(SOURCES)) -fsyntax-only
+
 build: $(TARGETDIR)/$(BINARY)
 
 run: $(TARGETDIR)/$(BINARY)
