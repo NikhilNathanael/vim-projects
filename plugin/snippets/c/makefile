@@ -22,11 +22,11 @@ LIBS :=
 
 # Compiles Binary from object files
 $(TARGETDIR)/$(BINARY): $(addprefix $(TARGETDIR)\, $(OBJECTS))
-	$(CC) $(CFLAGS) $(addprefix $(TARGETDIR)\, $(OBJECTS)) -o $(TARGETDIR)/$(BINARY) $(OPTLEVEL)
+	$(CC) $(CFLAGS) $(addprefix $(TARGETDIR)\, $(OBJECTS)) -o $(TARGETDIR)/$(BINARY) $(OPTLEVEL) -L$(LIBDIR) $(addprefix $(LIBDIR)\\,$(LIBS))
 
 # Compiles object files from source
-$(TARGETDIR)\\%.o: $(SRCDIR)\\%.c
-	$(CC) $(CFLAGS) $(SRCDIR)/$*.c -c -o $(TARGETDIR)/$*.o $(OPTLEVEL) 
+$(TARGETDIR)\\%.o: $(SRCDIR)\\%.c $(addprefix $(INCLUDEDIR)\\,$(INCLUDES))
+	$(CC) $(CFLAGS) $(SRCDIR)/$*.c -c -o $(TARGETDIR)/$*.o $(OPTLEVEL) -I$(INCLUDEDIR)
 
 # Only checks for syntax correctness
 check:
