@@ -30,7 +30,7 @@ $(TARGETDIR)\\%.o: $(SRCDIR)\\%.c $(addprefix $(INCLUDEDIR)\\,$(INCLUDES))
 
 # Only checks for syntax correctness
 check:
-	$(CC) $(CFLAGS) $(addprefix $(SRCDIR)\, $(SOURCES)) -fsyntax-only
+	$(CC) $(CFLAGS) $(addprefix $(SRCDIR)\, $(SOURCES)) -fsyntax-only -I$(INCLUDEDIR)
 
 build: $(TARGETDIR)/$(BINARY)
 
