@@ -74,9 +74,9 @@ if !g:project_languages->has_key('c')
 			# add gitignore file
 			writefile(
 				[
-					'./target/*',
+					'./target/',
 				],
-				"./gitignore"
+				"./.gitignore"
 			)
 		endif
 
@@ -122,9 +122,9 @@ if !g:project_languages->has_key('cpp')
 			# add gitignore file
 			writefile(
 				[
-					'./target/*',
+					'./target/',
 				],
-				"./gitignore"
+				"./.gitignore"
 			)
 		endif
 
